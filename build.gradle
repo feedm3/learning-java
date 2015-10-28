@@ -1,17 +1,50 @@
-group 'com.codecrafters'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
-
-sourceCompatibility = 1.8
+apply plugin: 'idea'
+apply plugin: 'groovy'
 
 repositories {
     jcenter()
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.8'
+}
+
+group 'com.codecrafters'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+idea {
+    module {
+        downloadJavadoc = true
+    }
+}
+
+
+sourceSets {
+    // java
+    main.java.srcDir "src/main/java"
+    test.java.srcDir "src/test/java"
+
+    // groovy
+    test.groovy.srcDir "src/test/groovy"
+
+    // resources
+    main.resources.srcDir "src/main/resources"
+    test.resources.srcDir "src/test/resources"
+}
+
+test {
+    // spock-reports already creates nice html in /build/spock-reports/index.html
+    // so we disable the default report
+    reports.html.enabled = false
+}
+
 dependencies {
-    compile 'org.mindrot:jbcrypt:0.3',
+    compile 'de.svenkubiak:jBCrypt:0.4',
             'com.google.guava:guava:18.0'
+
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4',
             'org.codehaus.groovy:groovy-all:2.4.4',
             'com.athaydes:spock-reports:1.2.7'
