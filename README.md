@@ -1,5 +1,7 @@
 # Learning Java
 
+[![Build Status](https://travis-ci.org/feedm3/learning-java.svg)](https://travis-ci.org/feedm3/learning-java)
+
 This is a repository to try out different libraries with test implementations.
 
 ## Run
