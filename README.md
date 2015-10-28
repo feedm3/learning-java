@@ -19,4 +19,8 @@ You can then open the `build/spock-reports/index.html` file in your browser to s
 ## Tested libraries
 
 - [guava](https://github.com/google/guava)
+    - Google Core Libraries for Java
+    - [Show me the tests](src/test/groovy/guava)
 - [jBcrypt](https://github.com/svenkubiak/jBCrypt)
+    - Implementation the OpenBSD Blowfish password hashing algorithm
+    - [Show me the tests](src/test/groovy/bcrypt)
