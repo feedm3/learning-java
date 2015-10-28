@@ -24,15 +24,17 @@ class JBcryptTest extends Specification {
         (hash.length() == 59 || hash.length() == 60)
     }
 
-    def "password and hash must be validated true"() {
+    def "validate password and hash"() {
         given: "a password"
         def password = 'testpassword'
 
         when: "we hash the password"
         def hash = BCrypt.hashpw(password, BCrypt.gensalt(9))
 
-        then: "we can validate the password against this hash"
+        then: "we get 'true' for the correct password"
         BCrypt.checkpw(password, hash)
+
+        and: "we get 'false' for the incorrect password"
         !BCrypt.checkpw("wrong password", hash)
     }
 }
