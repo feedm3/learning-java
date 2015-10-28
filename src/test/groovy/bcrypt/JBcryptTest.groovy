@@ -9,7 +9,7 @@ import spock.lang.Specification
  *
  * @author Fabian Dietenberger
  */
-class asdJBcryptTest extends Specification {
+class JBcryptTest extends Specification {
 
     def "create a new hash"() {
         given: "a password"
