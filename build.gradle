@@ -1,0 +1,15 @@
+group 'com.codecrafters'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4',
+            'com.athaydes:spock-reports:1.2.7'
+}
