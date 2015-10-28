@@ -1,10 +1,17 @@
 # Learning Java
 
+This is a repository to try out different libraries with test implementations.
+
 ## Run
 
-'gradle test'
+To run all test just hit the following command
 
-## Whats inside
+`gradlew test`
+
+You can then open the [build/spock-reports/index.html](build/spock-reports/index.html) file
+in your browser to see all test results.
+
+## Tested libraries
 
 - [guava](https://github.com/google/guava)
-- [jBcrypt](https://github.com/jeremyh/jBCrypt)
+- [jBcrypt](https://github.com/svenkubiak/jBCrypt)
