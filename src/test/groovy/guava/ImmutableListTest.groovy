@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 
 /**
- * This class is used as test for the guava immutable list
+ * This class is used as test for the guava immutable list.
  *
  * https://github.com/google/guava/wiki/ImmutableCollectionsExplained
  *

@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 
 /**
- * Tests for the Enums helper class.
+ * This class is used as test for the guava enums.
  *
  * http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/base/Enums.html
  *

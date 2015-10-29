@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- * This class is used as test for guavas cache
+ * This class is used as test for the guavas cache.
  *
  * https://github.com/google/guava/wiki/CachesExplained
  *

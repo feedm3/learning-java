@@ -8,6 +8,8 @@ import spock.lang.Specification
 /**
  * This class is used as test fot the guava bimap.
  *
+ * https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap
+ *
  * @author Fabian Dietenberger
  */
 class BiMapTest extends Specification {

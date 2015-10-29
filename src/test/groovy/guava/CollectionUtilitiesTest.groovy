@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 
 /**
- * Helper methods if you work with lists, sets, iterables...
+ * This class is used as test for guava helper methods if you work with lists and sets.
  *
  * https://github.com/google/guava/wiki/CollectionUtilitiesExplained
  *
