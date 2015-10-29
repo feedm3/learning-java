@@ -21,6 +21,8 @@ gradlew test
 
 After the test you can open the `build/spock-reports/index.html` file in your browser to see all generated test results.
 
+There's also a run configuration for IntelliJ to run all tests.
+
 ## Tested libraries
 
 * [guava](https://github.com/google/guava)
