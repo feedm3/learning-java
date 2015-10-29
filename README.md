@@ -19,7 +19,7 @@ To run all test just hit the following command
 gradlew test
 ```
 
-You can then open the `build/spock-reports/index.html` file in your browser to see all test results.
+After the test you can open the `build/spock-reports/index.html` file in your browser to see all generated test results.
 
 ## Tested libraries
 
