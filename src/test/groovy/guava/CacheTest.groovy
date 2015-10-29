@@ -80,7 +80,7 @@ class CacheTest extends Specification {
         when:
         cache.getUnchecked("first")
         cache.getUnchecked("second")
-        Thread.sleep(30)
+        Thread.sleep(60)
         cache.getUnchecked("first") // reset 'first' expiration time
         Thread.sleep(80)
 
@@ -89,7 +89,7 @@ class CacheTest extends Specification {
         cache.getIfPresent("second") == null
 
         when:
-        Thread.sleep(100)
+        Thread.sleep(110)
 
         then:
         cache.getIfPresent("first") == null

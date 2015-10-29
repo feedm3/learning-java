@@ -2,6 +2,8 @@ package guava
 
 import spock.lang.Specification
 
+import static com.google.common.base.Preconditions.checkArgument
+
 
 /**
  * This class is used as test for guava preconditions.

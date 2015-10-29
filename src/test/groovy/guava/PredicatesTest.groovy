@@ -1,5 +1,6 @@
 package guava
 
+import com.google.common.base.Predicate
 import com.google.common.base.Predicates
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
@@ -18,7 +19,7 @@ class PredicatesTest extends Specification {
 
     def "use a custom predicate"() {
         given:
-        Set<Integer> numbers = Sets.create(1, 3, 5, 6, 7, 8)
+        Set<Integer> numbers = Sets.newHashSet(1, 3, 5, 6, 7, 8)
 
         when:
         Iterable<Integer> evenNumbers = Iterables.filter(numbers, new IsEvenNumber())
@@ -45,7 +46,7 @@ class PredicatesTest extends Specification {
     class IsEvenNumber implements Predicate<Integer> {
 
         @Override
-        boolean apply(@Nullable final Integer input) {
+        boolean apply(final Integer input) {
             return (input % 2) == 0;
         }
     }

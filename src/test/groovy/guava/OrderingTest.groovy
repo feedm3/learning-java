@@ -1,6 +1,7 @@
 package guava
 
 import com.google.common.collect.Ordering
+import com.google.common.primitives.Ints
 import spock.lang.Specification
 
 
@@ -112,7 +113,7 @@ class OrderingTest extends Specification {
     class StringOrderingByLength extends Ordering<String> {
 
         @Override
-        int compare(@Nullable final String left, @Nullable final String right) {
+        int compare(final String left, final String right) {
             return Ints.compare(left.length(), right.length())
         }
     }
