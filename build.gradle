@@ -45,7 +45,9 @@ dependencies {
     compile 'de.svenkubiak:jBCrypt:0.4',
             'com.google.guava:guava:18.0'
 
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4',
+    testCompile 'junit:junit:4.12',
+            'com.google.truth:truth:0.27',
+            'org.spockframework:spock-core:1.0-groovy-2.4',
             'org.codehaus.groovy:groovy-all:2.4.4',
             'com.athaydes:spock-reports:1.2.7'
 }
