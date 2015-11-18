@@ -14,15 +14,14 @@ the API and check if it behaves like we expect.
 
 ## Run
 
-To run all test just hit the following command
+To run all test just hit the following command or use the IntelliJ run configuration from this repo
 
 ```
 gradlew test
 ```
 
-After the test you can open the `build/spock-reports/index.html` file in your browser to see all generated test results.
-
-There's also a run configuration for IntelliJ to run all tests.
+After the test you can open the `build/reports/tests/index.html` file in your browser to see all generated test results.
+There are also more detailed reports for all spock tests in `build/spock-reports/index.html`.
 
 ## Tested libraries
 
