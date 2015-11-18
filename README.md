@@ -35,6 +35,6 @@ There are also more detailed reports for all spock tests in `build/spock-reports
 
 ## Tested Java 8 features
 
-* [Lambdas](src/test/java/LambdasTest)
-* [Streams](src/test/java/StreamsTest)
+* [Lambdas](src/test/java/java8/LambdasTest.java)
+* [Streams](src/test/java/java8/StreamsTest.java)
 
