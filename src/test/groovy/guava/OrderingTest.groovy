@@ -42,39 +42,39 @@ class OrderingTest extends Specification {
 
     def "order strings by length with custom order"() {
         given: "a custom order and a strings array"
-        def stringsToSort = Arrays.asList("Johanna", "Stefan", "Sankt Martin", "Fabi")
+        def stringsToSort = Arrays.asList("Michi", "Moe", "Peter Griffin", "Fabi")
         def stringOrderingByLength = new StringOrderingByLength()
 
         when: "we sort the array"
         Collections.sort(stringsToSort, stringOrderingByLength)
 
         then: "the array is sorted by the strings length"
-        stringsToSort.get(0) == "Fabi"
-        stringsToSort.last() == "Sankt Martin"
+        stringsToSort.first() == "Moe"
+        stringsToSort.last() == "Peter Griffin"
     }
 
     def "order strings by length with custom and secondary order"() {
         given:
-        def stringsToSort = Arrays.asList("John", "Stefan", "Sankt Martin", "Fabian") // some have the same length
+        def stringsToSort = Arrays.asList("Michi", "Moe", "Peter Griffin", "Fabian") // some have the same length
         def stringOrderingByLength = new StringOrderingByLength()
 
         when:
         Collections.sort(stringsToSort, stringOrderingByLength.compound(Ordering.natural()))
 
         then:
-        stringsToSort.get(0) == "John"
-        stringsToSort.get(1) == "Fabian"
-        stringsToSort.get(2) == "Stefan"
-        stringsToSort.get(3) == "Sankt Martin"
+        stringsToSort.get(0) == "Moe"
+        stringsToSort.get(1) == "Michi"
+        stringsToSort.get(2) == "Fabian"
+        stringsToSort.get(3) == "Peter Griffin"
 
         when:
         Collections.sort(stringsToSort, stringOrderingByLength.reverse().compound(Ordering.natural().reverse()))
 
         then:
-        stringsToSort.get(0) == "Sankt Martin"
-        stringsToSort.get(1) == "Stefan"
-        stringsToSort.get(2) == "Fabian"
-        stringsToSort.get(3) == "John"
+        stringsToSort.get(0) == "Peter Griffin"
+        stringsToSort.get(1) == "Fabian"
+        stringsToSort.get(2) == "Michi"
+        stringsToSort.get(3) == "Moe"
     }
 
     def "ordering list with nulls"() {

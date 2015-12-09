@@ -15,34 +15,34 @@ class JoinerTest extends Specification {
 
     def "concatenate a string array"() {
         given:
-        def strings = ["Fabian", "Stefan", "John", "Martin"]
+        def strings = ["Fabi", "Moe", "Schleif", "Louis"]
 
         when:
         def concatedString = Joiner.on(", ").join(strings)
 
         then:
-        concatedString == "Fabian, Stefan, John, Martin"
+        concatedString == "Fabi, Moe, Schleif, Louis"
     }
 
     def "concatenate a string array with nulls"() {
         given:
-        def strings = [null, "Stefan", null, "Martin"]
+        def strings = [null, "Moe", null, "Louis"]
 
         when:
         def concatedString = Joiner.on(", ").skipNulls().join(strings)
 
         then:
-        concatedString == "Stefan, Martin"
+        concatedString == "Moe, Louis"
     }
 
     def "concatenate a string array and fill nulls with placeholder"() {
         given:
-        def strings = [null, "Stefan", null, "Martin"]
+        def strings = [null, "Moe", null, "Louis"]
 
         when:
         def concatedString = Joiner.on(", ").useForNull("deleted").join(strings)
 
         then:
-        concatedString == "deleted, Stefan, deleted, Martin"
+        concatedString == "deleted, Moe, deleted, Louis"
     }
 }
