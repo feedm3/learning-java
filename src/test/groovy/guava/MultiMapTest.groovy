@@ -45,5 +45,11 @@ class MultimapTest extends Specification {
         multimap.containsKey("BMW")
         multimap.containsValue("A4")
         multimap.containsEntry("BMW", "5er")
+        
+        when: "we put the same key in again"
+        multimap.put("BMW", "5er")
+
+        then: "it does also get stored"
+        multimap.get("BMW").size() == 3
     }
 }
