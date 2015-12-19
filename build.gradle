@@ -36,7 +36,7 @@ sourceSets {
 
 dependencies {
     compile 'de.svenkubiak:jBCrypt:0.4',
-            'com.google.guava:guava:18.0'
+            'com.google.guava:guava:19.0'
 
     testCompile 'junit:junit:4.12',
             'com.google.truth:truth:0.27',
