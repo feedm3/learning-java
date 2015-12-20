@@ -25,14 +25,25 @@ class CacheTest extends Specification {
 
         expect:
         cache.size() == 0
+
+        when:
         cache.getUnchecked("hallo") == "HALLO"
-        cache.size() == 1
         cache.getUnchecked("hallo") == "HALLO"
+
+        then:
         cache.size() == 1
+
+        when:
         cache.getUnchecked("HalLo") == "HALLO"
+
+        then:
         cache.size() == 2
+
+        when:
         cache.getIfPresent("hallo") == "HALLO"
         cache.getIfPresent("notCache") == null
+
+        then:
         cache.size() == 2
     }
 
@@ -43,10 +54,14 @@ class CacheTest extends Specification {
 
         expect:
         cache.size() == 0
+
+        when:
         cache.getUnchecked("first")
         cache.getUnchecked("second")
         cache.getUnchecked("third")
         cache.getUnchecked("fourth")
+
+        then:
         cache.size() == 3
         cache.getIfPresent("first") == null
         cache.getIfPresent("second") == "SECOND"
@@ -60,15 +75,21 @@ class CacheTest extends Specification {
         Weigher<String, String> weigherByStringLength = new WeigherByStringLength()
         LoadingCache<String, String> cache = CacheBuilder.newBuilder().maximumWeight(10).weigher(weigherByStringLength).build(loader)
 
-        expect:
+        when:
         // if a weight is set, the cache deletes entries if the weight size gets reached
         // the cache may delete entries before the limit gets reached
         // you do not know what entries get deleted. the cache selects the entries which are less likely to be used again
         cache.getUnchecked("vw")
         cache.getUnchecked("bmw")
         cache.getUnchecked("audi") // weight = 9
+
+        then:
         cache.size() == 3
+
+        when:
         cache.getUnchecked("xyz") // weight = 10
+
+        then:
         cache.size() == 3
     }
 
