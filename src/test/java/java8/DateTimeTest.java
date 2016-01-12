@@ -27,7 +27,7 @@ public class DateTimeTest {
     }
 
     @Test
-    public void addPeriodToLocalDate() {
+    public void testAddingPeriodToLocalDate() {
         final LocalDate date = LocalDate.of(2015, 3, 24);
         final Period period = Period.ofDays(2);
 
