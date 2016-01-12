@@ -39,7 +39,7 @@ public class CloneTest {
         homer.setChild(new Person("Bart"));
         final Person homerClone = homer.clone();
 
-        // if we clone an object the nested objects still sharing the same objects!
+        // if we clone an object the nested objects are still sharing the same objects!
         assertThat(homer).isNotSameAs(homerClone);
         assertThat(homer.getChild()).isSameAs(homerClone.getChild());
 
