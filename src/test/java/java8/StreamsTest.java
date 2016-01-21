@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -51,5 +53,50 @@ public class StreamsTest {
 
         assertThat(bestCharacters.size()).isEqualTo(2);
         assertThat(bestCharacters).containsAllOf("Fabi", "Done");
+    }
+
+    @Test
+    public void looping() {
+        // instead of a classic for loops we can use an IntStream
+        // the pros are the better readability and a final index variable
+        // which we therefore can use in a lambda
+        IntStream.range(0, 10)
+                .forEach(index -> {
+                    assertThat(index).isAtLeast(0);
+                    assertThat(index).isLessThan(10);
+                });
+    }
+
+    @Test
+    public void loopingInfiniteStreams() {
+        // the stream api can loop infinite times
+        final List<Double> sqrtOfFirst100EvenNumbers = Stream.iterate(1, e -> e + 1)
+                .filter(StreamsTest::isEven)
+                .map(Math::sqrt)
+                .limit(100)
+                .collect(Collectors.toList());
+
+        sqrtOfFirst100EvenNumbers.forEach(number -> {
+            assertThat(number * number).isAtLeast(2.0);
+            assertThat(number * number).isAtMost(201.0);
+        });
+
+        final List<Integer> first100EvenNumbers = Stream.iterate(1, e -> e + 1)
+                .filter(StreamsTest::isEven)
+                .limit(100)
+                .collect(Collectors.toList());
+
+        first100EvenNumbers.forEach(number -> {
+            assertThat(number).isAtLeast(2);
+            assertThat(number).isAtMost(200);
+        });
+
+        Stream.iterate(10, e -> e + 3)
+                .limit(100)
+                .forEach(System.out::println);
+    }
+
+    static boolean isEven(final int number) {
+        return number % 2 == 0;
     }
 }
