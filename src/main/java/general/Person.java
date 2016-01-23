@@ -1,4 +1,4 @@
-package general.util;
+package general;
 
 /**
  * This class is used as POJO which can be cloned.

@@ -1,6 +1,5 @@
 package general;
 
-import general.util.Person;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
