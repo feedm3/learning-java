@@ -1,5 +1,8 @@
 package general;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This class is used as POJO which can be cloned.
  *
@@ -8,10 +11,16 @@ package general;
 public class Person implements Cloneable {
 
     private String name;
+    private int age;
     private Person child;
 
     public Person(final String name) {
         this.name = name;
+    }
+
+    public Person(final String name, final int age) {
+        this.name = name;
+        this.age = age;
     }
 
     public String getName() {
@@ -20,6 +29,14 @@ public class Person implements Cloneable {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(final int age) {
+        this.age = age;
     }
 
     public Person getChild() {
@@ -38,5 +55,13 @@ public class Person implements Cloneable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<Person> buildPersons() {
+        return Arrays.asList(
+                new Person("Max", 18),
+                new Person("Peter", 23),
+                new Person("Pamela", 23),
+                new Person("David", 12));
     }
 }

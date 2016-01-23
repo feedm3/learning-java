@@ -1,11 +1,10 @@
 package java8;
 
+import general.Person;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -13,24 +12,163 @@ import static com.google.common.truth.Truth.assertThat;
  * This class is used as test for the java 8 stream api.
  * <p>
  * Most of the stream examples are inspired by a great talk from
- * Dr. Venkat Subramaniam https://youtu.be/wk3WLaR2V2U
+ * Dr. Venkat Subramaniam https://youtu.be/wk3WLaR2V2U and the
+ * streams tutorial from Benjamin Winterberg
+ * http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
  *
  * @author Fabian Dietenberger
  */
 public class StreamsTest {
 
     /**
-     * Instead of a classic for loops we can use an IntStream
-     * the pros are the better readability and a final index variable
-     * which we therefore can use in a lambda
+     * Stream objects can be created from various data sources. You can create a stream
+     * from every List and Set object as well as from builder methods inside the different
+     * stream classes.
+     */
+    @Test
+    public void createAStream() {
+        // create a stream from a list and set object
+        Arrays.asList("a", "b", "c")
+                .stream();
+        new HashMap<>().entrySet().stream();
+
+        // various builder methods
+        Stream.of("a", "b", "c");
+        IntStream.range(1, 4);
+    }
+
+    /**
+     * There are two kinds of streams: Regular streams and primitive streams.
+     * Primitive streams are for working with int, long and double. Both streams
+     * are basically the same but primitive streams also support a sum() and
+     * average() operation.
+     *
+     * A typical scenario an IntStream can be used is for classic for-loops.
      */
     @Test
     public void basicIntStreamLoop() {
+        // for-loop replacement
         IntStream.range(0, 10)
                 .forEach(index -> {
                     assertThat(index).isAtLeast(0);
                     assertThat(index).isLessThan(10);
                 });
+
+        // average calculation
+        OptionalDouble average = DoubleStream.iterate(1, e -> e + 1)
+                .limit(3) // 1, 2, 3
+                .average();
+        assertThat(average.getAsDouble()).isWithin(2.0);
+    }
+
+    /**
+     * Every element gets passed down the intermediate functions one after another.
+     * To reduce execution amounts it is recommended to put the filter methods at first
+     * to only operate on relevant with the other intermediate functions.
+     */
+    @Test
+    public void executionOrder() {
+        int[] mapExecutionAmounts = new int[]{0, 0};
+        int[] filterExecutionAmounts = new int[]{0, 0};
+
+        // using the map operator first every element runs through it
+        Stream.of("d1", "a1", "a2", "c1")
+                .map(s -> {
+                    mapExecutionAmounts[0]++;
+                    return s.toUpperCase();
+                })
+                .filter(s -> {
+                    filterExecutionAmounts[0]++;
+                    return s.startsWith("A");
+                })
+                .forEach(s1 -> {});
+        assertThat(mapExecutionAmounts[0]).isEqualTo(4);
+        assertThat(filterExecutionAmounts[0]).isEqualTo(4);
+
+        // if we first filter our elements only the filtered elements
+        // get called in the map operation
+        Stream.of("d1", "a1", "a2", "c1")
+                .filter(s -> {
+                    filterExecutionAmounts[1]++;
+                    return s.startsWith("a");
+                })
+                .map(s -> {
+                    mapExecutionAmounts[1]++;
+                    return s.toUpperCase();
+                })
+                .forEach(s -> {});
+        assertThat(filterExecutionAmounts[1]).isEqualTo(4);
+        assertThat(mapExecutionAmounts[1]).isEqualTo(2);
+
+        // the filter operator filters the element size down to 1
+        // so the sort operation doesn't event get called
+        int[] sortExecutionAmounts = new int[]{0};
+        Stream.of("d1", "a1", "a2", "c1")
+                .filter(s -> {
+                    filterExecutionAmounts[1]++;
+                    return s.startsWith("d");
+                })
+                .sorted((s1, s2) -> {
+                    sortExecutionAmounts[0]++;
+                    return s1.compareTo(s2);
+                })
+                .forEach(s -> {});
+        assertThat(sortExecutionAmounts[0]).isEqualTo(0);
+    }
+
+    /**
+     * A stream can only be executed once.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void executeStreamMoreThanOnce() {
+        Stream<Integer> stream = Stream.iterate(1, e -> e + 1)
+                .limit(10);
+        stream.forEach(number -> {});
+        stream.forEach(number -> {});
+    }
+
+    /**
+     * A collector is a terminal operation which can be used to transform a stream into
+     * a differnet kind of result. You can write you own collector or use one of the many
+     * built-in collectors in the Collectors class.
+     */
+    @Test
+    public void collectListToMap() {
+        final List<Person> persons = Person.buildPersons(); // Max 18, Peter 23, Pamela 23, David 12
+
+        // stream to list
+        final List<Person> filteredPersonsMap = persons.stream()
+                .filter(p -> p.getName().startsWith("P"))
+                .collect(Collectors.toList());
+        assertThat(filteredPersonsMap.size()).isEqualTo(2);
+
+        // stream to set
+        final Set<Person> filteredPersonsSet = persons.stream()
+                .filter(p -> p.getName().startsWith("P"))
+                .collect(Collectors.toSet());
+        assertThat(filteredPersonsSet.size()).isEqualTo(2);
+
+        // stream to map
+        final Map<String, Person> mapByName = persons.stream()
+                .collect(Collectors.toMap(Person::getName, p -> p)); // keys must be unique otherwise we get an exception
+        assertThat(mapByName.size()).isEqualTo(4);
+
+        // stream to map by grouping the elements
+        final Map<Integer, List<Person>> groupByAge = persons.stream()
+                .collect(Collectors.groupingBy(Person::getAge));
+        assertThat(groupByAge.get(23).size()).isEqualTo(2);
+
+        // aggregate properties
+        final Double averageAge = persons.stream()
+                .collect(Collectors.averagingDouble(Person::getAge));
+        assertThat(averageAge).isWithin(19.0);
+
+        // create a phrase
+        final String phrase = persons.stream()
+                .filter(p -> p.getAge() >= 18)
+                .map(Person::getName)
+                .collect(Collectors.joining(" and ", "In Germany ", " are of legal age.")); // concat string, prefix, suffix
+        assertThat(phrase).isEqualTo("In Germany Max and Peter and Pamela are of legal age.");
     }
 
     /**
@@ -117,17 +255,10 @@ public class StreamsTest {
         final List<String> fileNames = Arrays.asList("File1.txt", "File2.txt");
 
         String commaSeparatedFileNames = fileNames.stream()
-                .map(String::toUpperCase)
                 .collect(Collectors.joining(", "));
 
         assertThat(commaSeparatedFileNames).isEqualTo("File1.txt, File2.txt");
     }
-
-    @Test
-    public void sortAList() {
-
-    }
-
 
     @Test
     public void filterList() {
