@@ -11,9 +11,9 @@ import static com.google.common.truth.Truth.assertThat;
 /**
  * This class is used as test for the java 8 stream api.
  * <p>
- * Most of the stream examples are inspired by a great talk from
- * Dr. Venkat Subramaniam https://youtu.be/wk3WLaR2V2U and the
- * streams tutorial from Benjamin Winterberg
+ * Most of the stream examples are inspired by 2 great talks from
+ * Dr. Venkat Subramaniam https://youtu.be/wk3WLaR2V2U and https://www.youtube.com/watch?v=HVID35J7h_I
+ * and the streams tutorial by Benjamin Winterberg
  * http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
  *
  * @author Fabian Dietenberger
@@ -26,7 +26,7 @@ public class StreamsTest {
      * stream classes.
      */
     @Test
-    public void createAStream() {
+    public void howToCreateAStream() {
         // create a stream from a list and set object
         Arrays.asList("a", "b", "c")
                 .stream();
@@ -46,7 +46,7 @@ public class StreamsTest {
      * A typical scenario an IntStream can be used is for classic for-loops.
      */
     @Test
-    public void basicIntStreamLoop() {
+    public void primitiveStreams() {
         // for-loop replacement
         IntStream.range(0, 10)
                 .forEach(index -> {
@@ -63,11 +63,12 @@ public class StreamsTest {
 
     /**
      * Every element gets passed down the intermediate functions one after another.
+     *
      * To reduce execution amounts it is recommended to put the filter methods at first
      * to only operate on relevant with the other intermediate functions.
      */
     @Test
-    public void executionOrder() {
+    public void executionOrderOfIntermediateOperations() {
         int[] mapExecutionAmounts = new int[]{0, 0};
         int[] filterExecutionAmounts = new int[]{0, 0};
 
@@ -133,8 +134,8 @@ public class StreamsTest {
      * built-in collectors in the Collectors class.
      */
     @Test
-    public void collectListToMap() {
-        final List<Person> persons = Person.buildPersons(); // Max 18, Peter 23, Pamela 23, David 12
+    public void useCollectorToTransformToListMapSet() {
+        final List<Person> persons = Person.createPersons(); // Max 18, Peter 23, Pamela 23, David 12
 
         // stream to list
         final List<Person> filteredPersonsMap = persons.stream()
@@ -152,41 +153,6 @@ public class StreamsTest {
         final Map<String, Person> mapByName = persons.stream()
                 .collect(Collectors.toMap(Person::getName, p -> p)); // keys must be unique otherwise we get an exception
         assertThat(mapByName.size()).isEqualTo(4);
-
-        // stream to map by grouping the elements
-        final Map<Integer, List<Person>> groupByAge = persons.stream()
-                .collect(Collectors.groupingBy(Person::getAge));
-        assertThat(groupByAge.get(23).size()).isEqualTo(2);
-
-        // aggregate properties
-        final Double averageAge = persons.stream()
-                .collect(Collectors.averagingDouble(Person::getAge));
-        assertThat(averageAge).isWithin(19.0);
-
-        // create a phrase
-        final String phrase = persons.stream()
-                .filter(p -> p.getAge() >= 18)
-                .map(Person::getName)
-                .collect(Collectors.joining(" and ", "In Germany ", " are of legal age.")); // concat string, prefix, suffix
-        assertThat(phrase).isEqualTo("In Germany Max and Peter and Pamela are of legal age.");
-    }
-
-    /**
-     * The basic stream can be used to stream over generated values. The values
-     * can than be filtered and manipulated.
-     */
-    @Test
-    public void createAStreamAndFilterTheValues() {
-        // first we want to get a list with 100 numbers. we want to
-        // have the square root of every number that is even, starting at 1
-        Stream.iterate(1, e -> e + 1) // start at 1 and add 1 on every iteration
-                .filter(StreamsTest::isEven) // only take the even numbers
-                .map(Math::sqrt) // calculate the square root of every even number
-                .limit(100) // only accept the first 100 results
-                .forEach(number -> { // execute the stream with a for each loop
-                    assertThat(number * number).isAtLeast(2.0);
-                    assertThat(number * number).isAtMost(201.0); // rounding issues make the last number little higher 200
-                });
     }
 
     /**
@@ -204,20 +170,6 @@ public class StreamsTest {
             assertThat(number).isAtLeast(2);
             assertThat(number).isAtMost(200);
         });
-    }
-
-    /**
-     * We can change the starting parameter and the
-     * applied increment after every loop
-     */
-    @Test
-    public void customStreamStartingAndIncrementValue() {
-        Stream.iterate(10, e -> e + 3) // start at 10 and increment by 3
-                .limit(10)
-                .forEach(number -> {
-                    assertThat(number).isAtLeast(10);
-                    assertThat(number).isAtMost(37);
-                });
     }
 
     /**
@@ -248,20 +200,102 @@ public class StreamsTest {
     }
 
     /**
+     * ------------------------------------------------------
+     * Examples
+     * ------------------------------------------------------
+     */
+    @Test
+    public void generateAStreamAndFilterTheValues() {
+        // first we want to get a list with 100 numbers. we want to
+        // have the square root of every number that is even, starting at 1
+        Stream.iterate(1, e -> e + 1) // start at 1 and add 1 on every iteration
+                .filter(StreamsTest::isEven) // only take the even numbers
+                .map(e -> e * 2) // double number
+                .limit(5) // only accept the first 5 results [2, 4, 6, 8, 10]
+                .forEach(number -> { // execute the stream with a for each loop
+                    System.out.println(number);
+                    assertThat(number).isAtLeast(4);
+                    assertThat(number).isAtMost(20);
+                });
+    }
+
+    /**
+     * We can change the starting parameter and the
+     * applied increment after every loop
+     */
+    @Test
+    public void useCustomStreamStartingAndIncrementValue() {
+        Stream.iterate(10, e -> e + 3) // start at 10 and increment by 3
+                .limit(10)
+                .forEach(number -> {
+                    assertThat(number).isAtLeast(10);
+                    assertThat(number).isAtMost(37);
+                });
+    }
+
+    /**
      * The Collectors provide a join method to simply concat multiple streams with a given separator.
      */
     @Test
     public void createACommaSeparatedStringFromAList() {
         final List<String> fileNames = Arrays.asList("File1.txt", "File2.txt");
 
-        String commaSeparatedFileNames = fileNames.stream()
+        final String commaSeparatedFileNames = fileNames.stream()
                 .collect(Collectors.joining(", "));
 
         assertThat(commaSeparatedFileNames).isEqualTo("File1.txt, File2.txt");
     }
 
+
     @Test
-    public void filterList() {
+    public void aggregateAProperty() {
+        final List<Person> persons = Person.createPersons();
+
+        // calculate sum
+        final Integer sum = persons.stream()
+                .map(Person::getAge)
+                .collect(Collectors.summingInt(Integer::intValue)); // we get a list with Integers
+
+        assertThat(sum).isEqualTo(76);
+
+        // calculate an average
+        final Double averageAge = persons.stream()
+                .collect(Collectors.averagingDouble(Person::getAge));
+
+        assertThat(averageAge).isWithin(19.0);
+
+        // calculate min
+        final Optional<Integer> min = persons.stream()
+                .map(Person::getAge)
+                .min(Comparator.naturalOrder());
+
+        assertThat(min.get()).isEqualTo(12);
+    }
+
+    @Test
+    public void groupByProperty() {
+        final List<Person> persons = Person.createPersons();
+
+        final Map<Integer, List<Person>> groupByAge = persons.stream()
+                .collect(Collectors.groupingBy(Person::getAge));
+
+        assertThat(groupByAge.get(23).size()).isEqualTo(2);
+    }
+
+    @Test
+    public void createAPhrase() {
+        final List<Person> persons = Person.createPersons();
+
+        final String phrase = persons.stream()
+                .filter(p -> p.getAge() >= 18)
+                .map(Person::getName)
+                .collect(Collectors.joining(" and ", "In Germany ", " are of legal age.")); // concat string, prefix, suffix
+
+        assertThat(phrase).isEqualTo("In Germany Max and Peter and Pamela are of legal age.");
+    }
+
+    @Test
+    public void simpleListFiltering() {
         final List<String> urls = new ArrayList<>();
         urls.add("https://google.de");
         urls.add("https://facebook.de");
@@ -270,7 +304,6 @@ public class StreamsTest {
 
         final List<String> httpsUrls = urls.stream()
                 .filter(url -> url.startsWith("https"))
-                .map(url -> url)
                 .collect(Collectors.toList());
 
         assertThat(httpsUrls.size()).isEqualTo(3);
@@ -278,7 +311,7 @@ public class StreamsTest {
     }
 
     @Test
-    public void filterMap() {
+    public void filterMapByValueAndCreateAListOfKeys() {
         final Map<String, Integer> characterLevels = new HashMap<>();
         characterLevels.put("Fabi", 10);
         characterLevels.put("Dave", 1);

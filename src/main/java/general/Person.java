@@ -57,7 +57,7 @@ public class Person implements Cloneable {
         return null;
     }
 
-    public static List<Person> buildPersons() {
+    public static List<Person> createPersons() {
         return Arrays.asList(
                 new Person("Max", 18),
                 new Person("Peter", 23),
