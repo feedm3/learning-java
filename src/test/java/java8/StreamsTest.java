@@ -1,10 +1,13 @@
 package java8;
 
-import general.Person;
+import com.codecrafters.Person;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -42,7 +45,7 @@ public class StreamsTest {
      * Primitive streams are for working with int, long and double. Both streams
      * are basically the same but primitive streams also support a sum() and
      * average() operation.
-     *
+     * <p>
      * A typical scenario an IntStream can be used is for classic for-loops.
      */
     @Test
@@ -63,7 +66,7 @@ public class StreamsTest {
 
     /**
      * Every element gets passed down the intermediate functions one after another.
-     *
+     * <p>
      * To reduce execution amounts it is recommended to put the filter methods at first
      * to only operate on relevant with the other intermediate functions.
      */
@@ -82,7 +85,8 @@ public class StreamsTest {
                     filterExecutionAmounts[0]++;
                     return s.startsWith("A");
                 })
-                .forEach(s1 -> {});
+                .forEach(s1 -> {
+                });
         assertThat(mapExecutionAmounts[0]).isEqualTo(4);
         assertThat(filterExecutionAmounts[0]).isEqualTo(4);
 
@@ -97,7 +101,8 @@ public class StreamsTest {
                     mapExecutionAmounts[1]++;
                     return s.toUpperCase();
                 })
-                .forEach(s -> {});
+                .forEach(s -> {
+                });
         assertThat(filterExecutionAmounts[1]).isEqualTo(4);
         assertThat(mapExecutionAmounts[1]).isEqualTo(2);
 
@@ -113,7 +118,8 @@ public class StreamsTest {
                     sortExecutionAmounts[0]++;
                     return s1.compareTo(s2);
                 })
-                .forEach(s -> {});
+                .forEach(s -> {
+                });
         assertThat(sortExecutionAmounts[0]).isEqualTo(0);
     }
 
@@ -124,8 +130,10 @@ public class StreamsTest {
     public void executeStreamMoreThanOnce() {
         Stream<Integer> stream = Stream.iterate(1, e -> e + 1)
                 .limit(10);
-        stream.forEach(number -> {});
-        stream.forEach(number -> {});
+        stream.forEach(number -> {
+        });
+        stream.forEach(number -> {
+        });
     }
 
     /**
@@ -182,7 +190,7 @@ public class StreamsTest {
     @Test
     public void trickTheJavaCompilerWithChangingFinalVariable() {
         final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        final int[] factors = new int[]{ 2 }; // we put a factor inside an array
+        final int[] factors = new int[]{2}; // we put a factor inside an array
 
         final Stream<Integer> numbersStream = numbers.stream()
                 .map(e -> e * factors[0]); // the stream uses the factor to multiply every entry
