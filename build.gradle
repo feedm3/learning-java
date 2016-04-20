@@ -44,5 +44,6 @@ dependencies {
             'com.google.truth:truth:0.28',
             'org.spockframework:spock-core:1.0-groovy-2.4',
             'org.codehaus.groovy:groovy-all:2.4.5',
-            'com.athaydes:spock-reports:1.2.9'
+            'com.athaydes:spock-reports:1.2.10',
+            'org.slf4j:slf4j-simple:1.7.21'
 }
