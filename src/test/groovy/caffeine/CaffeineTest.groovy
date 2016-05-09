@@ -22,19 +22,19 @@ class CaffeineTest extends Specification {
                 .maximumSize(5)
                 .build();
 
-        when: // adding an entry direct
+        when: "adding an entry direct"
         cache.put(1, "One")
 
         then:
         cache.getIfPresent(1) == "One"
 
-        when: // adding an entry via a loader
+        when: "adding an entry via a loader"
         cache.get(2, { Integer key -> getStringFromExpensiveComputation(key) })
 
         then:
         cache.getIfPresent(2) == "Two"
 
-        when: // invalidation an entry
+        when: "invalidation an entry"
         cache.invalidate(1)
 
         then:
