@@ -1,13 +1,24 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'groovy'
+apply plugin: 'com.github.ben-manes.versions'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
+    }
+}
 
 repositories {
     jcenter()
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '2.13'
 }
 
 group 'com.codecrafters'
@@ -29,7 +40,6 @@ sourceSets {
 
     // groovy
     test.groovy.srcDir "src/test/groovy"
-
     // resources
     main.resources.srcDir "src/main/resources"
     test.resources.srcDir "src/test/resources"
@@ -38,12 +48,12 @@ sourceSets {
 dependencies {
     compile 'de.svenkubiak:jBCrypt:0.4.1',
             'com.google.guava:guava:19.0',
-            'com.github.ben-manes.caffeine:caffeine:2.2.7'
+            'com.github.ben-manes.caffeine:caffeine:2.3.0'
 
     testCompile 'junit:junit:4.12',
             'com.google.truth:truth:0.28',
             'org.spockframework:spock-core:1.0-groovy-2.4',
-            'org.codehaus.groovy:groovy-all:2.4.5',
+            'org.codehaus.groovy:groovy-all:2.4.6',
             'com.athaydes:spock-reports:1.2.10',
             'org.slf4j:slf4j-simple:1.7.21'
 }
