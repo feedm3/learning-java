@@ -1,6 +1,7 @@
 # Learning Java
 
 [![Build Status](https://img.shields.io/travis/feedm3/learning-java.svg?style=flat-square)](https://travis-ci.org/feedm3/learning-java)
+[![Dependency Status](https://dependencyci.com/github/feedm3/learning-java/badge?style=flat-square)](https://dependencyci.com/github/feedm3/learning-java)
 
 This repository is used to explore, learn and document different Java libraries and Java (especially Java 8) features.
 
