@@ -1,4 +1,4 @@
-package java8;
+package jdk8;
 
 import org.junit.Test;
 

@@ -15,6 +15,7 @@ the API and check if it behaves like we expect.
 
 
 ## Run
+
 To run all test just hit the following command or use the IntelliJ run configuration from this repo
 
 ```
@@ -34,6 +35,7 @@ gradlew dependencyUpdates -Drevision=release
 
 
 ## Tested libraries
+
 * [guava](src/test/groovy/guava)
     - Google Core Libraries for Java
     - [Project on Github](https://github.com/google/guava)
@@ -46,8 +48,10 @@ gradlew dependencyUpdates -Drevision=release
 
 
 ## Tested Java features
-* [Lambdas](src/test/java/java8/LambdasTest.java)
-* [Streams](src/test/java/java8/StreamsTest.java)
-* [Date and Time](src/test/java/java8/DateTimeTest.java)
-* [Clone objects](src/test/java/general/CloneTest.java)
+
+* [Lambdas](src/test/java/jdk8/LambdasTest.java)
+* [Streams](src/test/java/jdk8/StreamsTest.java)
+* [Date and Time](src/test/java/jdk8/DateTimeTest.java)
+* [Clone objects](src/test/java/jdk1/CloneTest.java)
+* [1Z0-809](src/test/java/jdk8/ocp) Some test notes for my Java SE 8 Programmer II certification
 

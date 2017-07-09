@@ -1,4 +1,4 @@
-package general;
+package jdk1;
 
 import com.codecrafters.Person;
 import org.junit.Test;
