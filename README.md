@@ -24,6 +24,14 @@ gradlew test
 After the test you can open the `build/reports/tests/index.html` file in your browser to see all generated test results.
 There are also more detailed reports for all spock tests in `build/spock-reports/index.html`.
 
+## Util
+
+To check for the latest dependency versions run
+
+```
+gradlew dependencyUpdates -Drevision=release
+```
+
 
 ## Tested libraries
 * [guava](src/test/groovy/guava)
