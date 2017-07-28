@@ -45,6 +45,9 @@ gradlew dependencyUpdates -Drevision=release
 * [caffeine](src/test/groovy/caffeine)
     - A high performance, near optimal caching library based on Java 8
     - [Project on Github](https://github.com/ben-manes/caffeine)
+* [Java JWT](src/test/groovy/jwt)
+    - Java implementation of JSON Web Token (JWT)
+    - [Project on Github](https://github.com/auth0/java-jwt)
 
 
 ## Tested Java features
