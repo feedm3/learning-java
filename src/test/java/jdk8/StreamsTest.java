@@ -37,6 +37,7 @@ public class StreamsTest {
 
         // various builder methods
         Stream.of("a", "b", "c");
+        Stream.generate(() -> "random value"); // inifit call of the supplier method
         IntStream.range(1, 4);
     }
 
