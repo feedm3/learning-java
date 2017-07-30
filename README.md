@@ -54,7 +54,10 @@ gradlew dependencyUpdates -Drevision=release
 
 * [Lambdas](src/test/java/jdk8/LambdasTest.java)
 * [Streams](src/test/java/jdk8/StreamsTest.java)
+* [Functional Interfaces](src/test/java/jdk8/FunctionalInterfacesTest.java)
 * [Date and Time](src/test/java/jdk8/DateTimeTest.java)
+* [Localization](src/test/java/jdk8/LocalizationTest.java)
+* [Optional](src/test/java/jdk8/OptionalTest.java)
+* [ConcurrentHashMap](src/test/java/jdk8/ConcurrentHashMapTest.java)
 * [Clone objects](src/test/java/jdk1/CloneTest.java)
-* [1Z0-809](src/test/java/jdk8/ocp) Some test notes for my Java SE 8 Programmer II certification
 

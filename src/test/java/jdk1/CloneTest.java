@@ -1,6 +1,5 @@
 package jdk1;
 
-import com.codecrafters.Person;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;

@@ -110,4 +110,20 @@ public class DateTimeTest {
         assertThat(date.getMonth()).isEqualTo(Month.FEBRUARY);
         assertThat(date.getDayOfMonth()).isEqualTo(1);
     }
+
+    @Test
+    public void testAddNegativeDurationAndPrintOut() {
+        final Duration duration = Duration.ofDays(-4);
+        final LocalDate date = LocalDate.of(2017, 7, 9);
+
+        System.out.println(date);
+        // -> 2017-07-09
+
+        final LocalDate datePlus = date.plusDays(duration.toDays());
+
+        System.out.println(datePlus);
+        // -> 2017-07-05
+
+        assertThat(datePlus.getDayOfMonth()).isEqualTo(5);
+    }
 }

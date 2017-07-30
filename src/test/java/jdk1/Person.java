@@ -1,4 +1,4 @@
-package com.codecrafters; /**
+package jdk1; /**
  * This class is used as simple POJO for the different tests.
  *
  * @author Fabian Dietenberger

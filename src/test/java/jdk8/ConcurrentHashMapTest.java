@@ -1,4 +1,4 @@
-package jdk8.ocp;
+package jdk8;
 
 import org.junit.Test;
 

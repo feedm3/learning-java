@@ -1,4 +1,4 @@
-package jdk8.ocp;
+package jdk8;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static com.google.common.truth.Truth.assertThat;
 /**
  *
  */
-public class FunctionTest {
+public class FunctionalInterfacesTest {
 
     @Test
     public void testFunctionInstantiation() {

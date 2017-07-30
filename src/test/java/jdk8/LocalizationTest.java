@@ -1,4 +1,4 @@
-package jdk8.ocp;
+package jdk8;
 
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import static com.google.common.truth.Truth.assertThat;
 /**
  *
  */
-public class LocaleTest {
+public class LocalizationTest {
 
     @Test
     public void testCountryIndiaAndLanguageFrench() {
