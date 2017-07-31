@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -125,5 +126,44 @@ public class DateTimeTest {
         // -> 2017-07-05
 
         assertThat(datePlus.getDayOfMonth()).isEqualTo(5);
+    }
+
+    /**
+     * Duration should be used for units of time a day and smaller,
+     * Period should be used for units of time a day and larger.
+     */
+    @Test
+    public void testDifferenceDurationPeriod() {
+        final Duration duration = Duration.ofDays(1);
+        final Period period = Period.ofDays(1);
+
+        assertThat(duration.getUnits()).containsExactly(ChronoUnit.SECONDS, ChronoUnit.NANOS);
+        assertThat(period.getUnits()).containsExactly(ChronoUnit.DAYS, ChronoUnit.MONTHS, ChronoUnit.YEARS);
+
+        assertThat(duration.toString()).isEqualTo("PT24H");
+        assertThat(period.toString()).isEqualTo("P1D");
+    }
+
+    /**
+     * Duration is used for objects that contain seconds, as duration itself is saved in seconds.
+     */
+    @Test(expected = UnsupportedTemporalTypeException.class)
+    public void testAddDurationToDate() {
+        LocalDate.now().plus(Duration.ofDays(1));
+    }
+
+    @Test
+    public void testDaylightSavings() {
+        // clock moves 1 hour forward on 12th march 2017 in US
+        final LocalDate date = LocalDate.of(2017, 3, 12);
+        final LocalTime time = LocalTime.of(1, 0);
+        final ZoneId zoneId = ZoneId.of("America/New_York");
+
+        final ZonedDateTime zoneDateTime = ZonedDateTime.of(date, time, zoneId);
+        final Duration duration = Duration.ofHours(3);
+        final ZonedDateTime dateTimeAfterDaylightSaving = zoneDateTime.plus(duration);
+
+        // 1:00 + daylight saving + 3:00
+        assertThat(dateTimeAfterDaylightSaving.getHour()).isEqualTo(5);
     }
 }

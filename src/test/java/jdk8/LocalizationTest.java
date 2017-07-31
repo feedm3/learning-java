@@ -2,9 +2,8 @@ package jdk8;
 
 import org.junit.Test;
 
-import com.google.common.truth.Truth;
-
-import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.zone.ZoneRulesException;
 import java.util.Locale;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -20,5 +19,10 @@ public class LocalizationTest {
 
         assertThat(locale.getLanguage()).isEqualTo("fr");
         assertThat(locale.getCountry()).isEqualTo("IN");
+    }
+
+    @Test(expected = ZoneRulesException.class)
+    public void testGetUnknownZoneId() {
+        ZoneId.of("test");
     }
 }
