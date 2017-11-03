@@ -1,13 +1,24 @@
 package jdk8;
 
-import jdk1.Person;
 import org.junit.Test;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import jdk1.Person;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -378,6 +389,20 @@ public class StreamsTest {
          *       .forEach(x -> x * 2); // -> invalid return type
          *       .forEach(x -> return x); // -> invalid retrun statement
          */
+    }
+
+    @Test
+    public void concatMultipleStreams() {
+        final List<Integer> values = Arrays.asList(1, 2, 3);
+
+        final List<LocalDate> dates = Arrays.asList(
+                LocalDate.of(2017, Month.NOVEMBER, 1),
+                LocalDate.of(2017, Month.NOVEMBER, 2),
+                LocalDate.of(2017, Month.NOVEMBER, 3));
+
+        Stream.concat(values.stream(), dates.stream())
+                .peek(System.out::println) // 1, 2, 3, 2017-11-01, 2017-11-02, 2017-11-03
+                .collect(Collectors.toList());
     }
 
     /**
